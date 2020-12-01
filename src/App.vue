@@ -4,5 +4,12 @@
   </div>
 </template>
 
-<style lang="scss">
+<style>
+footer{
+    position:fixed;
+    width: 100%;
+    height: 50px;
+    bottom: 0px;
+    border-top: 1px solid #dddddd;
+}
 </style>
