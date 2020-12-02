@@ -3,7 +3,12 @@
     <van-row gutter="20">
       <van-col span="24" class="tutu">
         <img src="../../../src/assets/img/lg2.png" @click="showPopup"/>
-        <span class="lg" @click="showPopup">登录</span>
+        <template v-if="username==''">
+         <span class="lg" @click="showPopup">登录</span>
+        </template>
+         <template v-if="username!=''">
+         <span class="lg">{{username}}</span>
+        </template>
       </van-col>
       <van-col span="24">
         <ul>
@@ -27,13 +32,13 @@
       <van-col span="24">
         <van-popup v-model="show" closeable position="bottom" :style="{ height: '48%' }">
                         <div class="user" :class="{active2:flag}">
-                            <span :class="{active:flag}">账号</span><input type="text" v-model="user" placeholder="默认 admin" @focus="in_focus(0)" @blur="in_blur(0)">
+                            <span :class="{active:flag}">账号</span><input type="text" v-model="form.name" placeholder="默认 admin" @focus="in_focus(0)" @blur="in_blur(0)">
                         </div>
                         <div class="pwd" :class="{active2:flag1}">
-                            <span :class="{active:flag1}">密码</span><input type="password" v-model="pwd" placeholder="默认 123456" @focus="in_focus(1)" @blur="in_blur(1)">
+                            <span :class="{active:flag1}">密码</span><input type="password" v-model="form.pwd" @keyup.enter="login()" placeholder="默认 123" @focus="in_focus(1)" @blur="in_blur(1)">
                         </div>
                         <div class="but" :plain="true">
-                             <van-button  type="default" class="but2">登录</van-button>
+                             <van-button  type="default" class="but2" @click="login()">登录</van-button>
                         </div>
         </van-popup>
       </van-col>
@@ -46,16 +51,27 @@
 <script>
 import Tabbar from "../../components/Tabbar";
 export default {
+  created() {
+    this.username2();
+  },
   data() {
     return {
       show: false,
       flag:false,
       flag1:false,
-      user:'',
-      pwd:''
+      form:{
+         name:'',
+         pwd:'',
+      },
+      username:''
     };
   },
   methods: {
+    username2(){
+      if(sessionStorage.getItem('username')!=null){
+        this.username=sessionStorage.getItem('username');
+      }
+    },
     showPopup() {
       this.show = true;
     },
@@ -72,6 +88,18 @@ export default {
             }else if(num==1){
             this.flag1=false;
             }
+        },
+        login(){
+          if ((this.form.name == "admin") && (this.form.pwd == "123")) {
+          this.flag2=true;
+          var user = JSON.stringify(this.form);
+          sessionStorage.setItem("user", user);
+          this.username=sessionStorage.setItem("username", this.form.name);
+					this.$router.push({
+						path: '/index'
+					})
+				} else {
+				}
         }
   },
   components: {
