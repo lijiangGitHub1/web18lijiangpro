@@ -1,5 +1,6 @@
 <template>
     <div class="div_box">
+        <lazyComponent>
         <header>
             <div class="lunbo">
                 <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
@@ -24,6 +25,9 @@
                 <img src="../../../src/assets/img/2.png">
             </div>
             <div class="div_content">
+                <!-- <lazy-component>
+  <img v-for="(img,index) in imageList" v-lazy="img" :key="index" />
+</lazy-component> -->
                 <div class="div_text">
                     <h3>爆款必看</h3>
                     <h4>更多<van-icon name="arrow" color="yellow" style="font-weight:900;"/></h4>
@@ -174,6 +178,7 @@
             <footer>
                 <Tabbar></Tabbar>
             </footer>
+            </lazyComponent>
     </div>
 </template>
 <script>
@@ -181,10 +186,25 @@ import Tabbar from '../../components/Tabbar'
 export default {
     components:{
         Tabbar
+    },
+    data(){
+        return{
+             imageList: [
+        "https://img.yzcdn.cn/vant/apple-1.jpg",
+        "https://img.yzcdn.cn/vant/apple-2.jpg",
+        "https://img.yzcdn.cn/vant/apple-3.jpg",
+        "https://img.yzcdn.cn/vant/apple-4.jpg",
+        "https://img.yzcdn.cn/vant/apple-6.jpg",
+        "https://img.yzcdn.cn/vant/apple-5.jpg"
+      ],
+        }
     }
 }
 </script>
 <style scoped>
+.asd{
+    width: 40%;
+}
 .dibu{
     text-align: center;
     height: 50px;

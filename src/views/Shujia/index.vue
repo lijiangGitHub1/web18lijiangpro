@@ -1,7 +1,15 @@
 <template>
   <div>
     <van-col span="24" class="tutu" :style="imgArray">
+            <van-pull-refresh
+            class="shuaxin"
+  v-model="isLoading"
+  success-text="刷新成功"
+  @refresh="onRefresh"
+>
+</van-pull-refresh>
       <div class="shezhi">
+  
         <van-uploader :after-read="afterRead">
           <van-icon name="ellipsis" size="30" color="white" title="更换背景图片" />
         </van-uploader>
@@ -36,6 +44,8 @@ import Tabbar from "../../components/Tabbar";
 export default {
   data() {
     return {
+      count: 0,
+      isLoading: false,
       imgArray:{
         backgroundImage:'url(' + require('../../../src/assets/img/lg1.png') + ')',
         backgroundRepeat:'no-repeat',
@@ -47,6 +57,12 @@ export default {
     Tabbar
   },
   methods: {
+     onRefresh() {
+      setTimeout(() => {
+        this.isLoading = false;
+        this.count++;
+      }, 1000);
+    },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
       console.log(file.file.name);
@@ -64,6 +80,11 @@ export default {
 };
 </script>
 <style scoped>
+.shuaxin{
+height:110px;width:100%;
+position:absolute;
+color: black;
+}
 .gaofen span:last-child {
   margin-top: 16px;
   color: #999999;
